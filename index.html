@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLIX_SHOTZ</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://i.imgur.com/Z0Z9Y5G.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+}
+.overlay {
+    background: rgba(0,0,0,0.75);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.panel {
+    width: 360px;
+    background: rgba(20,0,40,0.95);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 0 20px #9b4dff;
+}
+.header {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #d27cff;
+    margin-bottom: 10px;
+}
+.section {
+    margin-bottom: 12px;
+}
+.section h3 {
+    margin: 6px 0;
+    color: #b28cff;
+}
+.option {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+}
+.option input[type="checkbox"] {
+    margin-right: 8px;
+}
+.range {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.range input {
+    width: 100%;
+}
+.login-box {
+    margin-bottom: 12px;
+}
+.login-box input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 6px;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #7f3cff, #d27cff);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.toast {
+    position: fixed;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #9b4dff;
+    transition: bottom 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    font-size: 14px;
+}
+.toast.show {
+    bottom: 30px;
+    opacity: 1;
+}
+.alert-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.alert-content {
+    background: #1a002a;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 20px #9b4dff;
+}
+.alert-content button {
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay">
+    <div class="panel">
+        <div class="header">FLIX_SHOTZ</div>
+
+        <div class="login-box">
+            <input type="text" id="username" placeholder="Usuário">
+            <input type="password" id="key" placeholder="Key 🔐">
+        </div>
+
+        <div class="section">
+            <h3>Funções</h3>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('Aimbot ativado')"> Aimbot</div>
+            <div class="range">🎯 Aimbot Strong <input type="range" min="0" max="100"></div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('ESP Players ativado')"> ESP Players</div>
+            <div class="range">👁️ ESP Intensity <input type="range" min="0" max="100"></div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('No Recoil ativado')"> No Recoil</div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('Aim Lock ativado')"> Aim Lock</div>
+            <div class="range">📐 Aim FOV <input type="range" min="0" max="100"></div>
+        </div>
+
+        <div class="section">
+            <h3>AIM BOT</h3>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('HS Cabeça ativado')"> HS Cabeça</div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('HS Peito ativado')"> HS Peito</div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('HS Pescoço ativado')"> HS Pescoço</div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('HS Quadril ativado')"> HS Quadril</div>
+        </div>
+
+        <div class="section">
+            <h3>Desempenho</h3>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('Modo desempenho ativado')"> Modo desempenho</div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('Modo suave ativado')"> Modo suave</div>
+            <div class="option"><input type="checkbox" onclick="playClick();notify('No lag ativado')"> No lag</div>
+        </div>
+
+        <button onclick="toggleMain()">Iniciar Auxílio</button>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="alertBox" class="alert-box">
+    <div class="alert-content">
+        <div id="alertText">Mensagem</div>
+        <button onclick="closeAlert()">OK</button>
+    </div>
+</div>
+
+<script>
+const validUser = "FLIX_SHOTZ";
+const validKey = "key2026FLIX";
+let active = false;
+
+function playClick() {
+    const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+    audio.play();
+}
+
+function notify(text) {
+    const toast = document.getElementById("toast");
+    toast.textContent = "Você ativou " + text;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+function showAlert(msg) {
+    document.getElementById("alertText").innerText = msg;
+    document.getElementById("alertBox").style.display = "flex";
+}
+
+function closeAlert() {
+    document.getElementById("alertBox").style.display = "none";
+}
+
+function toggleMain() {
+    const user = document.getElementById("username").value;
+    const key = document.getElementById("key").value;
+
+    if (user !== validUser || key !== validKey) {
+        showAlert("Adicione o usuário e a Key antes de prosseguir");
+        return;
+    }
+
+    active = !active;
+    notify(active ? "Sistema ativado" : "Sistema desativado");
+}
+</script>
+
+</body>
+</html>
